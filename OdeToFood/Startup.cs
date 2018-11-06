@@ -5,41 +5,93 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace OdeToFood
 {
     public class Startup
     {
+
+
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             //Registramos el servicio IGreeter o sea hacemos Dependence Injection
             services.AddSingleton<IGreeter, Greeter>();
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app
                             , IHostingEnvironment env
                             , IConfiguration configuration
-                            , IGreeter greeter)
+                            , IGreeter greeter
+                            , ILogger <Startup> logger)
         {
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
 
+            //app.UseDefaultFiles(); //indicate that use file into wwwtoot that mach de name.
+            app.UseStaticFiles();
 
-            app.UseWelcomePage();
+            //app.UseFileServer(); //this group both function
+
+            //app.UseMvcWithDefaultRoute(); this means that have route configuration
+
+            app.UseMvc(ConfigureRoutes);
 
             app.Run(async (context) =>
             {
-                var greeting = greeter.GetMessageOfTheDay(); //configuration["Greeting"];
+                //throw new Exception("Error");
 
-                await context.Response.WriteAsync(greeting);
+                var greeting = greeter.GetMessageOfTheDay(); //configuration["Greeting"];
+                //$"{ greeting} : {env.Envir0onmentName}"
+                //I configure contenct type if in the browser thas not apperar the text correctly. 
+                context.Response.ContentType = "text/plain";
+                await context.Response.WriteAsync($"Not found");
             });
+
+            //this methos is only invoke once
+
+            //app.Use(next => {
+            //    return async context =>
+            //    {
+            //        logger.LogInformation("Request incoming");
+
+            //        if (context.Request.Path.StartsWithSegments("/mym"))
+            //        {
+            //            await context.Response.WriteAsync("Hits!!!");
+
+            //            logger.LogInformation("Request handled");
+            //        }
+            //        else
+            //        {
+            //            await next(context);
+            //            logger.LogInformation("Response outgoing");
+            //        }
+            //    };
+            //});
+
+            //app.UseWelcomePage(new WelcomePageOptions() {
+            //    Path = "/wp"
+            //});
+        }
+
+        private void ConfigureRoutes(IRouteBuilder routeBuilder)
+        {
+
+            /// e.g. /Home/Index {controller} asp find class name HomeController and second {action} inside
+            /// the controller a method name Iindex and the last parameter with ? indicate that is optional.
+            /// If the controler name is empty by default take the name Home and the same for action.
+
+            routeBuilder.MapRoute("Default", 
+                "{controller=Home}/{action=Index}/{id?}");
         }
     }
 }
