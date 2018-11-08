@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
@@ -20,12 +16,14 @@ namespace OdeToFood
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            //Registramos el servicio IGreeter o sea hacemos Dependence Injection
+            //We register Greerter Service and ASP.CORE do injection dependeces
             services.AddSingleton<IGreeter, Greeter>();
+
             services.AddMvc();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // This method gets called by the runtime. 
+        //Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app
                             , IHostingEnvironment env
                             , IConfiguration configuration
@@ -51,13 +49,13 @@ namespace OdeToFood
                 //throw new Exception("Error");
 
                 var greeting = greeter.GetMessageOfTheDay(); //configuration["Greeting"];
-                //$"{ greeting} : {env.Envir0onmentName}"
+                //$"{ greeting} : {env.EnvironmentName}"
                 //I configure contenct type if in the browser thas not apperar the text correctly. 
                 context.Response.ContentType = "text/plain";
-                await context.Response.WriteAsync($"Not found");
+                await context.Response.WriteAsync(greeting);
             });
 
-            //this methos is only invoke once
+            //this methods is only invoke once
 
             //app.Use(next => {
             //    return async context =>
@@ -85,7 +83,6 @@ namespace OdeToFood
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
         {
-
             /// e.g. /Home/Index {controller} asp find class name HomeController and second {action} inside
             /// the controller a method name Iindex and the last parameter with ? indicate that is optional.
             /// If the controler name is empty by default take the name Home and the same for action.

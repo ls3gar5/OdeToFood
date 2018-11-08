@@ -12,7 +12,7 @@ namespace OdeToFood.Controllers
     {
         public IActionResult Index()
         {
-            ViewResult
+            //ViewResult
             //the name what is inside the action //
             //this.ControllerContext.ActionDescriptor.ActionName
             //this.ControllerContext.ActionDescriptor.ControllerName
