@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace OdeToFood
 {
@@ -28,36 +29,32 @@ namespace OdeToFood
                             , IHostingEnvironment env
                             , IConfiguration configuration
                             , IGreeter greeter
-                            , ILogger <Startup> logger)
+                            , ILogger<Startup> logger)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseDefaultFiles(); //indicate that use file into wwwtoot that mach de name.
-            app.UseStaticFiles();
+            //app.UseWelcomePage();
 
-            //app.UseFileServer(); //this group both function
-
-            //app.UseMvcWithDefaultRoute(); this means that have route configuration
-
-            app.UseMvc(ConfigureRoutes);
-
-            app.Run(async (context) =>
+            app.UseWelcomePage(new WelcomePageOptions()
             {
-                //throw new Exception("Error");
-
-                var greeting = greeter.GetMessageOfTheDay(); //configuration["Greeting"];
-                //$"{ greeting} : {env.EnvironmentName}"
-                //I configure contenct type if in the browser thas not apperar the text correctly. 
-                context.Response.ContentType = "text/plain";
-                await context.Response.WriteAsync(greeting);
+                Path = "/wp"
             });
 
-            //this methods is only invoke once
 
-            //app.Use(next => {
+            //app.UseDefaultFiles(); //indicate that use file into wwwtoot that mach de name.
+            //app.UseStaticFiles();
+            app.UseFileServer(); //this group both function
+
+            //app.UseMvcWithDefaultRoute(); this means that have route configuration
+            //app.UseMvc(ConfigureRoutes);
+
+            //this methods is only invoke once and more frequebcy used.
+            //app.Use(next =>
+            //{
             //    return async context =>
             //    {
             //        logger.LogInformation("Request incoming");
@@ -76,9 +73,17 @@ namespace OdeToFood
             //    };
             //});
 
-            //app.UseWelcomePage(new WelcomePageOptions() {
-            //    Path = "/wp"
-            //});
+
+            //SIMPLE RESPONSE
+            app.Run(async (context) =>
+            {
+                var greeting = greeter.GetMessageOfTheDay(); //configuration["Greeting"];
+                var message = $"{ greeting} : {env.EnvironmentName}";
+                //I configure contenct type if in the browser thas not apperar the text correctly. 
+                context.Response.ContentType = "text/plain";
+                await context.Response.WriteAsync(message);
+            });
+
         }
 
         private void ConfigureRoutes(IRouteBuilder routeBuilder)
@@ -87,7 +92,7 @@ namespace OdeToFood
             /// the controller a method name Iindex and the last parameter with ? indicate that is optional.
             /// If the controler name is empty by default take the name Home and the same for action.
 
-            routeBuilder.MapRoute("Default", 
+            routeBuilder.MapRoute("Default",
                 "{controller=Home}/{action=Index}/{id?}");
         }
     }
