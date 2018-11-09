@@ -47,9 +47,9 @@ namespace OdeToFood
 
             //app.UseDefaultFiles(); //indicate that use file into wwwtoot that mach de name.
             //app.UseStaticFiles();
-            app.UseFileServer(); //this group both function
+            //app.UseFileServer(); //this group both function
 
-            //app.UseMvcWithDefaultRoute(); this means that have route configuration
+            app.UseMvcWithDefaultRoute(); //this means that have route configuration
             //app.UseMvc(ConfigureRoutes);
 
             //this methods is only invoke once and more frequebcy used.
