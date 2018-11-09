@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OdeToFood.Models;
+using OdeToFood.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,15 @@ namespace OdeToFood.Controllers
 {
     public class HomeController : Controller
     {
+
+        private IRestorantData _restotantData;
+
+        public HomeController(IRestorantData restotantData)
+        {
+            _restotantData = restotantData;
+        }
+
+
         public IActionResult Index()
         {
             //ViewResult
@@ -29,12 +39,32 @@ namespace OdeToFood.Controllers
 
 
             //Here we create a model to response the client
-            var model = new Restaurant() { Id = 1, Name = "Leo Pizza's" };
+            var model = _restotantData.GetAll();
 
             //return new ObjectResult(model);
 
             //This indicate rebder the default view and past the model
             return View(model);
+        }
+
+        public IActionResult Name()
+        {
+            return Content("Hello from Name");
+        }
+
+        public Restaurant GetRestorante()
+        {
+            return new Restaurant()
+            {
+                Id = 1,
+                Name = "Leo"
+            };
+        }
+
+
+        public IActionResult BadRequestResponse()
+        {
+            return Content("No le vaaaa");
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
+using OdeToFood.Services;
 
 namespace OdeToFood
 {
@@ -19,6 +18,8 @@ namespace OdeToFood
         {
             //We register Greerter Service and ASP.CORE do injection dependeces
             services.AddSingleton<IGreeter, Greeter>();
+
+            services.AddScoped<IRestorantData, InMemoryRestorantData>();
 
             services.AddMvc();
         }
@@ -39,18 +40,18 @@ namespace OdeToFood
 
             //app.UseWelcomePage();
 
-            app.UseWelcomePage(new WelcomePageOptions()
-            {
-                Path = "/wp"
-            });
+            //app.UseWelcomePage(new WelcomePageOptions()
+            //{
+            //    Path = "/wp"
+            //});
 
 
             //app.UseDefaultFiles(); //indicate that use file into wwwtoot that mach de name.
             //app.UseStaticFiles();
             //app.UseFileServer(); //this group both function
 
-            app.UseMvcWithDefaultRoute(); //this means that have route configuration
-            //app.UseMvc(ConfigureRoutes);
+            //app.UseMvcWithDefaultRoute(); //this means that have route configuration
+            app.UseMvc(ConfigureRoutes);
 
             //this methods is only invoke once and more frequebcy used.
             //app.Use(next =>
@@ -74,14 +75,16 @@ namespace OdeToFood
             //});
 
 
-            //SIMPLE RESPONSE
+            ////SIMPLE RESPONSE
             app.Run(async (context) =>
             {
-                var greeting = greeter.GetMessageOfTheDay(); //configuration["Greeting"];
-                var message = $"{ greeting} : {env.EnvironmentName}";
-                //I configure contenct type if in the browser thas not apperar the text correctly. 
-                context.Response.ContentType = "text/plain";
-                await context.Response.WriteAsync(message);
+                //var greeting = greeter.GetMessageOfTheDay(); //configuration["Greeting"];
+                //var message = $"{ greeting} : {env.EnvironmentName}";
+                ////I configure contenct type if in the browser thas not apperar 
+                ////the text correctly. 
+                //context.Response.ContentType = "text/plain";
+                //await context.Response.WriteAsync(message);
+                context.Response.Redirect("badrequestresponse");
             });
 
         }
