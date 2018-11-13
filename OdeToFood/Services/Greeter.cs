@@ -14,6 +14,7 @@ namespace OdeToFood.Services
 
         public string GetMessageOfTheDay()
         {
+            var tst = _configuration.GetValue<string>("Greeting");
             return _configuration["Greeting"];
         }
     }

@@ -1,4 +1,5 @@
-﻿using OdeToFood.Models;
+﻿using Microsoft.AspNetCore.Mvc;
+using OdeToFood.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace OdeToFood.Services
     {
 
         IEnumerable<Restaurant> GetAll();
+        Restaurant Get(int id);
     }
 }

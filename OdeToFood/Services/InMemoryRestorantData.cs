@@ -20,6 +20,11 @@ namespace OdeToFood.Services
             };
         }
 
+        public Restaurant Get(int id)
+        {
+            return _restorats.FirstOrDefault(f=>f.Id==id);
+        }
+
         public IEnumerable<Restaurant> GetAll()
         {
             return _restorats;
