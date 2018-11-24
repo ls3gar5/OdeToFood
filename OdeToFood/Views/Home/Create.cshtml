@@ -1,0 +1,25 @@
+﻿@using OdeToFood.Models
+@model Restaurant
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+    <h1>Create</h1>
+    <form method="post">
+        <input asp-for="Name"/>
+
+        <select asp-for="Couisine" asp-items="@Html.GetEnumSelectList<CouisineType>()">
+        </select>
+
+        <input type="submit" name="save" value="Save" />
+        
+    </form>
+
+    <a asp-action="Index" asp-controller="Home">Go to Home</a>
+</body>
+</html>

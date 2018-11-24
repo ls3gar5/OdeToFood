@@ -29,5 +29,10 @@ namespace OdeToFood.Services
         {
             return _restorats;
         }
+
+        public int GetLastId()
+        {
+            return _restorats.Max(m => m.Id) + 1;
+        }
     }
 }

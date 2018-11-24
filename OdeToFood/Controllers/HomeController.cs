@@ -13,13 +13,15 @@ namespace OdeToFood.Controllers
     public class HomeController : Controller
     {
 
-        private IRestorantData _restotantData;
-        private IGreeter _greeter;
+        private readonly IRestorantData _restotantData;
+        private readonly IGreeter _greeter;
+
         public HomeController(IRestorantData restotantData,
                                 IGreeter greeter)
         {
             _restotantData = restotantData;
             _greeter = greeter;
+
         }
 
 
@@ -74,10 +76,30 @@ namespace OdeToFood.Controllers
             };
         }
 
-
         public IActionResult BadRequestResponse()
         {
             return Content("No le vaaaa");
         }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(RestaurantEditModel model)
+        {
+            var id = _restotantData.GetLastId();
+            var resto = new Restaurant()
+            {
+                Id = id,
+                Name = model.Name,
+                Couisine = model.Couisine
+            };
+
+            return View("Details",resto);
+        }
+
     }
 }

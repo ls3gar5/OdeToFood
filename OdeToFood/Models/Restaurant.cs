@@ -13,5 +13,6 @@ namespace OdeToFood.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public CouisineType Couisine { get; set; }
     }
 }
