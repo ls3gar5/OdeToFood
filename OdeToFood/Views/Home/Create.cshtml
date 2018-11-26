@@ -11,15 +11,21 @@
 <body>
     <h1>Create</h1>
     <form method="post">
-        <input asp-for="Name"/>
+        <div>
+            <label asp-for="Name"></label>
+            <input asp-for="Name" />
+            <span asp-validation-for="Name"></span>
+        </div>
 
-        <select asp-for="Couisine" asp-items="@Html.GetEnumSelectList<CouisineType>()">
-        </select>
-
+        <div>
+            <label asp-for="Couisine"></label>
+            <select asp-for="Couisine" asp-items="@Html.GetEnumSelectList<CouisineType>()"></select>
+            <span asp-validation-for="Couisine"></span>
+        </div>
         <input type="submit" name="save" value="Save" />
-        
-    </form>
 
+    </form>
+    <div asp-validation-summary="All"></div>
     <a asp-action="Index" asp-controller="Home">Go to Home</a>
 </body>
 </html>

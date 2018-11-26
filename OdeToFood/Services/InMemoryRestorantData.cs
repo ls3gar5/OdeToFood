@@ -30,9 +30,20 @@ namespace OdeToFood.Services
             return _restorats;
         }
 
-        public int GetLastId()
+        public Restaurant Add(Restaurant resto)
         {
-            return _restorats.Max(m => m.Id) + 1;
+            var id =  _restorats.Max(m => m.Id) + 1;
+
+            var newResto = new Restaurant()
+            {
+                Id = id,
+                Name = resto.Name,
+                Couisine = resto.Couisine
+            };
+
+            _restorats.Add(newResto);
+
+            return newResto;
         }
     }
 }

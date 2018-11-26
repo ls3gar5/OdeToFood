@@ -18,8 +18,9 @@ namespace OdeToFood
         {
             //We register Greerter Service and ASP.CORE do injection dependeces
             services.AddSingleton<IGreeter, Greeter>();
-
-            services.AddScoped<IRestorantData, InMemoryRestorantData>();
+            //AddScoped instance for each HHTP request
+            //AddSingleton one instance for all app "NOT USE for this case"
+            services.AddSingleton<IRestorantData, InMemoryRestorantData>();
 
             services.AddMvc();
         }
@@ -76,16 +77,16 @@ namespace OdeToFood
 
 
             ////SIMPLE RESPONSE
-            app.Run(async (context) =>
-            {
-                //var greeting = greeter.GetMessageOfTheDay(); //configuration["Greeting"];
-                //var message = $"{ greeting} : {env.EnvironmentName}";
-                ////I configure contenct type if in the browser thas not apperar 
-                ////the text correctly. 
-                //context.Response.ContentType = "text/plain";
-                //await context.Response.WriteAsync(message);
-                context.Response.Redirect("badrequestresponse");
-            });
+            //app.Run(async (context) =>
+            //{
+            //    //var greeting = greeter.GetMessageOfTheDay(); //configuration["Greeting"];
+            //    //var message = $"{ greeting} : {env.EnvironmentName}";
+            //    ////I configure contenct type if in the browser thas not apperar 
+            //    ////the text correctly. 
+            //    //context.Response.ContentType = "text/plain";
+            //    //await context.Response.WriteAsync(message);
+            //    context.Response.Redirect("badrequestresponse");
+            //});
 
         }
 

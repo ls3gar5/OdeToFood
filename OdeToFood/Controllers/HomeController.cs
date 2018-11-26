@@ -90,15 +90,23 @@ namespace OdeToFood.Controllers
         [HttpPost]
         public IActionResult Create(RestaurantEditModel model)
         {
-            var id = _restotantData.GetLastId();
+
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+
             var resto = new Restaurant()
             {
-                Id = id,
                 Name = model.Name,
                 Couisine = model.Couisine
             };
-
-            return View("Details",resto);
+            
+            resto = _restotantData.Add(resto);
+            return RedirectToAction(nameof(Details), new { id = resto.Id});
+            
+            //return View("Details",resto);
+            //This way return a new view in every Http request
         }
 
     }
