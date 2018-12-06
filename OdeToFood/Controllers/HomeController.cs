@@ -13,10 +13,10 @@ namespace OdeToFood.Controllers
     public class HomeController : Controller
     {
 
-        private readonly IRestorantData _restotantData;
+        private readonly IRestaurantData _restotantData;
         private readonly IGreeter _greeter;
 
-        public HomeController(IRestorantData restotantData,
+        public HomeController(IRestaurantData restotantData,
                                 IGreeter greeter)
         {
             _restotantData = restotantData;

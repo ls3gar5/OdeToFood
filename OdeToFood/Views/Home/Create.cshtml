@@ -1,5 +1,4 @@
-﻿@using OdeToFood.Models
-@model Restaurant
+﻿@model Restaurant
 
 <!DOCTYPE html>
 
@@ -26,6 +25,9 @@
 
     </form>
     <div asp-validation-summary="All"></div>
-    <a asp-action="Index" asp-controller="Home">Go to Home</a>
+
 </body>
 </html>
+@section footer {
+    <a asp-action="Index" asp-controller="Home">Go to Home</a>
+}

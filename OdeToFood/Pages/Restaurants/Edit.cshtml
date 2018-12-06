@@ -1,0 +1,35 @@
+﻿@page "{id}"
+@using OdeToFood.Pages.Restaurants;
+
+@model EditModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit: @Model.resto.Name</title>
+</head>
+<body>
+    <h1>Edit</h1>
+    <form method="post">
+        <input type="hidden" asp-for="resto.Id" />
+
+        <div>
+            <label asp-for="resto.Name"></label>
+            <input asp-for="resto.Name" />
+            <span asp-validation-for="resto.Name"></span>
+        </div>
+
+        <div>
+            <label asp-for="resto.Couisine"></label>
+            <select asp-for="resto.Couisine" asp-items="@Html.GetEnumSelectList<CouisineType>()"></select>
+            <span asp-validation-for="resto.Couisine"></span>
+        </div>
+        <input type="submit" name="save" value="Save" />
+
+    </form>
+
+    <div asp-validation-summary="All"></div>
+</body>
+</html>

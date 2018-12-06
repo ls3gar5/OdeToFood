@@ -5,7 +5,7 @@ using OdeToFood.Models;
 
 namespace OdeToFood.Services
 {
-    public class SqlRestaurantData : IRestorantData
+    public class SqlRestaurantData : IRestaurantData
     {
         private readonly OdoToFoodDbContext _context;
 

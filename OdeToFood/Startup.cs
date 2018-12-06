@@ -24,9 +24,10 @@ namespace OdeToFood
         {
             //We register Greerter Service and ASP.CORE do injection dependeces
             services.AddSingleton<IGreeter, Greeter>();
+            
             //AddScoped instance for each HTTP request, one single thread
             //AddSingleton one instance for all app "NOT USE for this case"
-            services.AddScoped<IRestorantData, SqlRestaurantData>();
+            services.AddScoped<IRestaurantData, SqlRestaurantData>();
             services.AddDbContext<OdoToFoodDbContext>(options => 
                     options.UseSqlServer(_configuration.GetConnectionString("OdoToFood")));
 
