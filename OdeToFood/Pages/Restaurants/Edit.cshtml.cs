@@ -14,7 +14,7 @@ namespace OdeToFood.Pages.Restaurants
         public int idResto { get; set; }
 
         [BindProperty]
-        public Restaurant resto { get; private set; }
+        public Restaurant Restaurant { get; set; }
 
         private readonly IRestaurantData _restaurantData;
 
@@ -25,8 +25,8 @@ namespace OdeToFood.Pages.Restaurants
 
         public IActionResult OnGet(int id)
         {
-            resto = _restaurantData.Get(id);
-            if (resto == null)
+            Restaurant = _restaurantData.Get(id);
+            if (Restaurant == null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -35,9 +35,15 @@ namespace OdeToFood.Pages.Restaurants
 
         }
 
-        public IActionResult OnPost(Restaurant restaurant)
+        public IActionResult OnPost()
         {
+            if (ModelState.IsValid)
+            {
+                _restaurantData.Update(Restaurant);
+                return RedirectToAction("Details", "Home", new { id = Restaurant.Id });
+            }
 
+            return Page();
         }
     }
 }
