@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -48,6 +49,8 @@ namespace OdeToFood
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseRewriter(new RewriteOptions()
+                            .AddRedirectToHttpsPermanent());
             //app.UseWelcomePage();
 
             //app.UseWelcomePage(new WelcomePageOptions()
