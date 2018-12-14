@@ -13,7 +13,7 @@ namespace OdeToFood
 {
     public class Startup
     {
-        //LALALAL
+
         private readonly IConfiguration _configuration;
 
         public Startup(IConfiguration configuration)
